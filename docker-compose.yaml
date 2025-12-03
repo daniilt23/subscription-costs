@@ -1,0 +1,30 @@
+services:
+  app:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:alpine
+    env_file:
+      - ./backend/.env
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=subscription
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d subscription"]
+      interval: 1s
+      timeout: 60s
+      retries: 5
+      start_period: 1s
+    volumes:
+      - sub_project:/var/lib/poestgresql/data
+    ports:
+      - "5555:5432"
+
+volumes:
+  sub_project:
