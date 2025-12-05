@@ -9,6 +9,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// CreateSubscription godoc
+// @Summary      Create subscription
+// @Description  Create subscription to user
+// @Tags         subscription
+// @Accept       json
+// @Produce      json
+// @Param        req  body     dto.CreateSubscriptionReq  true  "create body"
+// @Success      201  {object}   dto.CreateSubscriptionResp
+// @Failure      400  {object}  map[string]string
+// @Failure      500  {object}  map[string]string
+// @Router       /create [post]
 func (h *Handler) CreateSubscription(c *gin.Context) {
 	var req dto.CreateSubscriptionReq
 	err := c.ShouldBindJSON(&req)
@@ -50,6 +61,17 @@ func (h *Handler) CreateSubscription(c *gin.Context) {
 	})
 }
 
+// GetCost godoc
+// @Summary      Get cost
+// @Description  Get cost of all user subscription by filter
+// @Tags         subscription
+// @Accept       json
+// @Produce      json
+// @Param        req  body     dto.GetCostReq  true  "create body"
+// @Success      200  {object} dto.GetCostResp
+// @Failure      400  {object}  map[string]string
+// @Failure      500  {object}  map[string]string
+// @Router       /cost [post]
 func (h *Handler) GetCost(c *gin.Context) {
 	var req dto.GetCostReq
 	err := c.ShouldBindJSON(&req)

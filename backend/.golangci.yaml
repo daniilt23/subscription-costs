@@ -38,7 +38,7 @@ linters:
       check-alias: true
     cyclop:
       max-complexity: 15
-      package-average: 5
+      package-average: 6
     dogsled:
       max-blank-identifiers: 1
     errcheck:

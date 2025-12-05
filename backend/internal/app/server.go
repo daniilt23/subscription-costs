@@ -1,9 +1,9 @@
 package app
 
 import (
-	"log"
 	"net/http"
 	"subscription/internal/config"
+	"time"
 )
 
 type Server struct {
@@ -11,11 +11,11 @@ type Server struct {
 }
 
 func NewServer(cfg *config.Config, handler http.Handler) *Server {
-	log.Printf("Server run on port: %s", cfg.Server.Port)
 	return &Server{
 		srv: &http.Server{
-			Addr: cfg.Server.Host + ":" + cfg.Server.Port,
-			Handler: handler,
+			Addr:              cfg.Server.Host + ":" + cfg.Server.Port,
+			Handler:           handler,
+			ReadHeaderTimeout: time.Second * 10,
 		},
 	}
 }

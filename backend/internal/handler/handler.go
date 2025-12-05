@@ -4,9 +4,13 @@ import (
 	"subscription/internal/service"
 
 	"github.com/gin-gonic/gin"
+	"github.com/swaggo/files"
+	"github.com/swaggo/gin-swagger"
+
+	_ "subscription/docs"
 )
 
-type Handler struct{
+type Handler struct {
 	Service *service.Service
 }
 
@@ -22,7 +26,8 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	apiRouter := r.Group("/api")
 
 	apiRouter.POST("/create", h.CreateSubscription)
-	apiRouter.GET("/cost", h.GetCost)
+	apiRouter.POST("/cost", h.GetCost)
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return r
 }

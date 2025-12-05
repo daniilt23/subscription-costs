@@ -1,0 +1,127 @@
+basePath: /api
+definitions:
+  dto.CreateSubscriptionReq:
+    description: Create subscription request
+    properties:
+      end_date:
+        type: string
+      price:
+        type: integer
+      service_name:
+        type: string
+      start_date:
+        type: string
+      user_id:
+        type: string
+    required:
+    - price
+    - service_name
+    - start_date
+    - user_id
+    type: object
+  dto.CreateSubscriptionResp:
+    description: Create subscription response
+    properties:
+      message:
+        type: string
+    type: object
+  dto.GetCostReq:
+    description: Get cost request
+    properties:
+      end_date:
+        type: string
+      service_name:
+        type: string
+      start_date:
+        type: string
+      user_id:
+        type: string
+    required:
+    - end_date
+    - service_name
+    - start_date
+    - user_id
+    type: object
+  dto.GetCostResp:
+    description: Get cost response
+    properties:
+      total_cost:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a server which can add subscription and get summary cost of
+    user subscriptions.
+  title: Subscription Rest API
+  version: "1.0"
+paths:
+  /cost:
+    post:
+      consumes:
+      - application/json
+      description: Get cost of all user subscription by filter
+      parameters:
+      - description: create body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/dto.GetCostReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.GetCostResp'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get cost
+      tags:
+      - subscription
+  /create:
+    post:
+      consumes:
+      - application/json
+      description: Create subscription to user
+      parameters:
+      - description: create body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateSubscriptionReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.CreateSubscriptionResp'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create subscription
+      tags:
+      - subscription
+swagger: "2.0"
